@@ -1,18 +1,13 @@
 import {useReducer} from 'react';
 
+import {sha256} from 'react-native-sha256';
+
 const INITIAL_STATE = [];
 
 const marketListReducer = (state, action) => {
   switch (action.type) {
     case 'ADD':
-      return [
-        ...state,
-        {
-          id: '123',
-          title: action.title,
-          check: false,
-        },
-      ];
+      return [...state, action.item];
     case 'CHECK':
       return state.map(item => {
         if (item.id === action.id) {
@@ -29,10 +24,15 @@ const marketListReducer = (state, action) => {
 const useMarketList = () => {
   const [state, dispatch] = useReducer(marketListReducer, INITIAL_STATE);
 
-  const addItem = title => {
+  const addItem = async title => {
+    const hashId = await sha256(title);
     dispatch({
       type: 'ADD',
-      title: title,
+      item: {
+        id: hashId,
+        title: title,
+        check: false,
+      },
     });
   };
 

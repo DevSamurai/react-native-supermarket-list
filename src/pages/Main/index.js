@@ -40,6 +40,7 @@ const Main = () => {
           style={styles.button}
           onPress={() => {
             addItem(marketItem);
+            setMarketItem('');
           }}>
           <Text style={styles.textButton}>Add</Text>
         </TouchableOpacity>
