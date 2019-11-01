@@ -4,20 +4,25 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  FlatList,
+  TouchableHighlight,
   StyleSheet,
 } from 'react-native';
+
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 import useMarketList from '../../hooks/useMarketList';
 
 function Item({item, onPressItem}) {
   const isChecked = item.check;
   return (
-    <TouchableOpacity style={styles.item} onPress={() => onPressItem(item.id)}>
+    <TouchableHighlight
+      underlayColor={'#f37262'}
+      style={styles.item}
+      onPress={() => onPressItem(item.id)}>
       <Text style={[styles.itemTitle, isChecked ? styles.itemChecked : '']}>
         {item.title}
       </Text>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 }
 
@@ -45,10 +50,15 @@ const Main = () => {
           <Text style={styles.textButton}>Add</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
+      <SwipeListView
         data={marketList}
         renderItem={({item}) => <Item item={item} onPressItem={checkItem} />}
-        keyExtractor={item => item.id}
+        renderHiddenItem={data => (
+          <TouchableOpacity style={styles.deleteButton} onPress={() => {}}>
+            <Text style={styles.itemTitle}>Del</Text>
+          </TouchableOpacity>
+        )}
+        rightOpenValue={-75}
       />
     </View>
   );
@@ -104,6 +114,16 @@ const styles = StyleSheet.create({
   itemChecked: {
     textDecorationLine: 'line-through',
     fontStyle: 'italic',
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    borderRadius: 3,
+    padding: 10,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    width: 75,
   },
 });
 
