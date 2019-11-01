@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -8,23 +8,12 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const marketList = [
-  {
-    id: '123',
-    title: 'Banana',
-    check: false,
-  },
-  {
-    id: '1234',
-    title: 'Arroz',
-    check: true,
-  },
-];
+import useMarketList from '../../hooks/useMarketList';
 
-function Item({item}) {
+function Item({item, onPressItem}) {
   const isChecked = item.check;
   return (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={() => onPressItem(item.id)}>
       <Text style={[styles.itemTitle, isChecked ? styles.itemChecked : '']}>
         {item.title}
       </Text>
@@ -33,18 +22,31 @@ function Item({item}) {
 }
 
 const Main = () => {
+  const [marketItem, setMarketItem] = useState('');
+  const [marketList, addItem, checkItem] = useMarketList();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>MARKET CART DEVSAMURAI</Text>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} value={''} onChangeText={() => {}} />
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TextInput
+          style={styles.input}
+          value={marketItem}
+          onChangeText={text => {
+            setMarketItem(text);
+          }}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            addItem(marketItem);
+          }}>
           <Text style={styles.textButton}>Add</Text>
         </TouchableOpacity>
       </View>
       <FlatList
         data={marketList}
-        renderItem={({item}) => <Item item={item} />}
+        renderItem={({item}) => <Item item={item} onPressItem={checkItem} />}
         keyExtractor={item => item.id}
       />
     </View>
