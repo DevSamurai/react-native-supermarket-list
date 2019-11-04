@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.usereducer"
+        applicationId "br.com.devsamurai.supermarketlist.lab"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

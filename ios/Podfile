@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'UseReducer' do
-  # Pods for UseReducer
+target 'SupermarketList' do
+  # Pods for SupermarketList
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -36,7 +36,7 @@ target 'UseReducer' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  target 'UseReducerTests' do
+  target 'SupermarketListTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -44,10 +44,10 @@ target 'UseReducer' do
   use_native_modules!
 end
 
-target 'UseReducer-tvOS' do
-  # Pods for UseReducer-tvOS
+target 'SupermarketList-tvOS' do
+  # Pods for SupermarketList-tvOS
 
-  target 'UseReducer-tvOSTests' do
+  target 'SupermarketList-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

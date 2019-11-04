@@ -1,4 +1,4 @@
-package com.usereducer;
+package br.com.devsamurai.supermarketlist.lab;
 
 import android.app.Application;
 import android.content.Context;

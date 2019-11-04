@@ -1,4 +1,4 @@
-package com.usereducer;
+package br.com.devsamurai.supermarketlist.lab;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "UseReducer";
+    return "SupermarketList";
   }
 }
