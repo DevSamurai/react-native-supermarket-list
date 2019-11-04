@@ -16,6 +16,10 @@ const marketListReducer = (state, action) => {
           return item;
         }
       });
+    case 'REMOVE':
+      return state.filter(item => {
+        return item.id !== action.id;
+      });
     default:
       return state;
   }
@@ -43,7 +47,14 @@ const useMarketList = () => {
     });
   };
 
-  return [state, addItem, checkItem];
+  const removeItem = id => {
+    dispatch({
+      type: 'REMOVE',
+      id: id,
+    });
+  };
+
+  return [state, addItem, checkItem, removeItem];
 };
 
 export default useMarketList;

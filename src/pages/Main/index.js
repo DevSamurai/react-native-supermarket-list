@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, forwardRef} from 'react';
 import {
   View,
   Text,
@@ -8,27 +8,36 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {SwipeListView} from 'react-native-swipe-list-view';
+import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
 
 import useMarketList from '../../hooks/useMarketList';
 
-function Item({item, onPressItem}) {
+const Item = forwardRef(({item, onCheckItem, onRemoveItem}, ref) => {
   const isChecked = item.check;
   return (
-    <TouchableHighlight
-      underlayColor={'#f37262'}
-      style={styles.item}
-      onPress={() => onPressItem(item.id)}>
-      <Text style={[styles.itemTitle, isChecked ? styles.itemChecked : '']}>
-        {item.title}
-      </Text>
-    </TouchableHighlight>
+    <SwipeRow rightOpenValue={-75} ref={ref}>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => {
+          onRemoveItem(item.id);
+        }}>
+        <Text style={styles.itemTitle}>Del</Text>
+      </TouchableOpacity>
+      <TouchableHighlight
+        underlayColor={'#f37262'}
+        style={styles.item}
+        onPress={() => onCheckItem(item.id)}>
+        <Text style={[styles.itemTitle, isChecked ? styles.itemChecked : '']}>
+          {item.title}
+        </Text>
+      </TouchableHighlight>
+    </SwipeRow>
   );
-}
+});
 
 const Main = () => {
   const [marketItem, setMarketItem] = useState('');
-  const [marketList, addItem, checkItem] = useMarketList();
+  const [marketList, addItem, checkItem, removeItem] = useMarketList();
 
   return (
     <View style={styles.container}>
@@ -52,13 +61,9 @@ const Main = () => {
       </View>
       <SwipeListView
         data={marketList}
-        renderItem={({item}) => <Item item={item} onPressItem={checkItem} />}
-        renderHiddenItem={data => (
-          <TouchableOpacity style={styles.deleteButton} onPress={() => {}}>
-            <Text style={styles.itemTitle}>Del</Text>
-          </TouchableOpacity>
+        renderItem={({item}) => (
+          <Item item={item} onCheckItem={checkItem} onRemoveItem={removeItem} />
         )}
-        rightOpenValue={-75}
       />
     </View>
   );
