@@ -1,4 +1,5 @@
 import {useReducer} from 'react';
+import {Alert} from 'react-native';
 
 import {sha256} from 'react-native-sha256';
 
@@ -29,6 +30,17 @@ const useMarketList = () => {
   const [state, dispatch] = useReducer(marketListReducer, INITIAL_STATE);
 
   const addItem = async title => {
+    if (title === '') {
+      return Alert.alert('Produto não informado');
+    }
+
+    const itemFound = state.filter(
+      item => item.title.toUpperCase() === title.toUpperCase(),
+    );
+    if (itemFound.length > 0) {
+      return Alert.alert(`O produto ${title} já existe na lista`);
+    }
+
     const hashId = await sha256(title);
     dispatch({
       type: 'ADD',
