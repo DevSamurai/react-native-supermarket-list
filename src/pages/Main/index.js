@@ -5,10 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableHighlight,
+  Image,
   StyleSheet,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
+
+import logo from '../../assets/logo.png';
 
 import useMarketList from '../../hooks/useMarketList';
 
@@ -21,10 +25,10 @@ const Item = forwardRef(({item, onCheckItem, onRemoveItem}, ref) => {
         onPress={() => {
           onRemoveItem(item.id);
         }}>
-        <Text style={styles.itemTitle}>Del</Text>
+        <Icon name="delete" size={30} color={'#fff'} />
       </TouchableOpacity>
       <TouchableHighlight
-        underlayColor={'#f37262'}
+        underlayColor={'#bdc3c7'}
         style={styles.item}
         onPress={() => onCheckItem(item.id)}>
         <Text style={[styles.itemTitle, isChecked ? styles.itemChecked : '']}>
@@ -41,22 +45,22 @@ const Main = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>MARKET CART DEVSAMURAI</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           value={marketItem}
+          placeholder={'Adicionar Produto'}
           onChangeText={text => {
             setMarketItem(text);
           }}
         />
         <TouchableOpacity
-          style={styles.button}
+          style={styles.addButton}
           onPress={() => {
             addItem(marketItem);
             setMarketItem('');
           }}>
-          <Text style={styles.textButton}>Add</Text>
+          <Text style={styles.textAddButton}>+</Text>
         </TouchableOpacity>
       </View>
       <SwipeListView
@@ -65,6 +69,8 @@ const Main = () => {
           <Item item={item} onCheckItem={checkItem} onRemoveItem={removeItem} />
         )}
       />
+
+      <Image source={logo} style={{alignSelf: 'center'}} />
     </View>
   );
 };
@@ -72,42 +78,33 @@ const Main = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f37272',
-  },
-  title: {
-    textAlign: 'center',
-    fontFamily: 'Helvetica',
-    fontSize: 28,
-    fontWeight: '600',
+    backgroundColor: '#fff',
   },
   inputContainer: {
     flexDirection: 'row',
     margin: 10,
   },
   input: {
-    padding: 5,
-    borderWidth: 2,
-    borderColor: '#000',
-    borderRadius: 5,
     width: '80%',
+    fontSize: 30,
+    color: '#000',
+    fontFamily: 'Roboto',
   },
-  button: {
+  addButton: {
     flex: 1,
-    backgroundColor: '#3498db',
     width: '20%',
-    borderRadius: 3,
     marginLeft: 2,
     alignItems: 'center',
     alignSelf: 'center',
-    paddingVertical: 10,
+    fontFamily: 'Roboto',
   },
-  textButton: {
+  textAddButton: {
     textAlign: 'center',
-    color: '#fff',
-    fontSize: 20,
+    color: '#e74c3c',
+    fontSize: 60,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#fff',
     borderRadius: 3,
     padding: 10,
     marginVertical: 8,
@@ -115,13 +112,16 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: 30,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
   },
   itemChecked: {
     textDecorationLine: 'line-through',
     fontStyle: 'italic',
+    color: '#bdc3c7',
   },
   deleteButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#e74c3c',
     borderRadius: 3,
     padding: 10,
     marginVertical: 8,
