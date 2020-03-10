@@ -1,5 +1,5 @@
 {
-  "name": "UseReducer",
+  "name": "SupermarketList",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,7 +12,9 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.3",
-    "react-native-sha256": "^1.3.6"
+    "react-native-sha256": "^1.3.6",
+    "react-native-swipe-list-view": "^2.0.3",
+    "react-native-vector-icons": "^6.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
